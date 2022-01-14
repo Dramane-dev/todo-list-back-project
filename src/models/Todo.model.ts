@@ -1,25 +1,21 @@
-import { DataTypes } from "sequelize";
 import { db } from "../../db/config.db";
+import { DataTypes } from "sequelize/dist";
+import { Task } from "./Task.model";
 
-export const Todo = db.define("todo", {
-    id: {
-        type: DataTypes.INTEGER,
-        primaryKey: true,
-        autoIncrement: true,
+const Todo = db.define('todo', {
+    todoListId: {
+        type: DataTypes.UUID,
         allowNull: false,
+        primaryKey: true
     },
     name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    description: {
-        type: DataTypes.STRING,
-    },
-    createdAt: {
-        type: DataTypes.DATE,
-    },
-    status: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
+        type: DataTypes.INTEGER,
+        allowNull: false
+    }
 });
+
+Todo.hasMany(Task);
+
+export {
+    Todo
+};

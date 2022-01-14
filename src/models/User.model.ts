@@ -1,12 +1,12 @@
-import { DataTypes } from "sequelize";
-import { db } from "../../db/config.db";
+import { DataTypes } from 'sequelize';
+import { db } from '../../db/config.db';
 
-export const Users = db.define("user", {
-    id: {
-        type: DataTypes.INTEGER,
+export const User = db.define('user', {
+    userId: {
+        type: DataTypes.UUID,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false,
+        allowNull: false
     },
     name: {
         type: DataTypes.STRING,
@@ -14,10 +14,10 @@ export const Users = db.define("user", {
     email: {
         type: DataTypes.STRING,
         unique: true,
-        allowNull: false,
+        allowNull: false
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false,
-    },
+        allowNull: false
+    }
 });

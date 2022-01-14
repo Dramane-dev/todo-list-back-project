@@ -3,18 +3,28 @@ CREATE DATABASE todolist;
 USE todolist;
 
 CREATE TABLE Users(
-    id INT NOT NULL AUTO_INCREMENT,
+    userId INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
-    password VARCHAR(50) NOT NULL,
-    PRIMARY KEY(id)
+    password VARCHAR(255) NOT NULL,
+    PRIMARY KEY(userId)
 );
 
-CREATE TABLE Todos(
+CREATE TABLE TodoList(
+    todoListId INT NOT NULL AUTO_INCREMENT,
+    name VARCHAR(255) NOT NULL,
+    userId INT,
+    PRIMARY KEY(todoListId),
+    FOREIGN KEY(userId) REFERENCES Users(userId)
+);
+
+CREATE TABLE Task(
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255),
     created_at DATE,
     status VARCHAR(20) NOT NULL,
-    PRIMARY KEY(id)
+    todoListId INT,
+    PRIMARY KEY(id),
+    FOREIGN KEY(todoListId) REFERENCES TodoList(todoListId)
 );
