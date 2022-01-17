@@ -20,7 +20,7 @@ export default class Main {
                 "x-access-token, Origin, Content-Type, Accept"
             );
             next();
-        })
+        });
     }
 
     startServer(): void {

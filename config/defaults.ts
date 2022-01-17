@@ -8,4 +8,5 @@ export default {
     mysqlPort: parseInt(String(process.env.MY_SQL_PORT)),
     mySqlUser: String(process.env.MY_SQL_USER),
     mySqlPassword: String(process.env.MY_SQL_PASSWORD),
+    refreshTokens:  [] as string []
 };

@@ -4,8 +4,8 @@ import bcrypt from 'bcrypt';
 
 export const SignupController = (req: Request, res: Response) => {
     User.create({
-        name: req.body.name,
-        email: req.body.email,
+        name: req.body.name.toLowerCase(),
+        email: req.body.email.toLowerCase(),
         password: bcrypt.hashSync(req.body.password, 12)
     })
      .then(() => {

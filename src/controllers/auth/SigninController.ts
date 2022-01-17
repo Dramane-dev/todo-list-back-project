@@ -1,36 +1,49 @@
 import { User } from "../../models/User.model";
 import { Request, Response } from "express";
 import { verifyPassword } from "../../functions/verifyPassword";
-import { generateToken } from "../../functions/generateToken";
+import { generateTokenAndRefreshToken } from "../../functions/generateToken";
+import config from "../../../config/defaults";
 
 export const SigninController = (req: Request, res: Response) => {
     User.findOne({
         where: {
-            email: req.body.email
+            email: req.body.email.toLowerCase()
         }
     })
      .then(user => {
          let password: string = req.body.password;
-         let validePassword: boolean = !verifyPassword(password, user?.getDataValue('password'));
+         let validPassword: boolean = !verifyPassword(password, user?.getDataValue('password'));
 
-         if (!user || validePassword) {
+         if (!user || validPassword) {
             return res.status(404).send({
-                message: 'User '
+                message: 'Invalid informations ❌!'
             });
          }
 
-        return res.status(200).send({
-            message: 'User connected successfuly ✅!',
-            user: {
-                name: user?.getDataValue('name'),
-                email: user?.getDataValue('email'),
-                accessToken: generateToken(user?.getDataValue('userId'))
-            }
-        });
+         let token: string = generateTokenAndRefreshToken(user?.getDataValue('userId'), String(process.env.ACCESS_TOKEN_SECRET));
+         let refreshToken: string = generateTokenAndRefreshToken(user?.getDataValue('userId'), String(process.env.REFRESH_TOKEN_SECRET));
+
+         config.refreshTokens.push(refreshToken);
+         
+         return res.status(200).send({
+             message: 'User connected successfuly ✅!',
+             user: {
+                 name: user?.getDataValue('name'),
+                 email: user?.getDataValue('email'),
+                 accessToken: token,
+                 refreshToken: refreshToken
+             }
+         });
      })
      .catch(error => {
-         return res.status(404).send({
-            message: error.message + " ⚠️"
-        });
+         if (error.message.includes('data and hash arguments required')) {
+            return res.status(404).send({
+                message: "Invalid informations ⚠️"
+            });
+         } else {
+            return res.status(404).send({
+                message: error.message + " ⚠️"
+            });
+         }
      });
 };
