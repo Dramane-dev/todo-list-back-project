@@ -10,21 +10,21 @@ CREATE TABLE Users(
     PRIMARY KEY(userId)
 );
 
-CREATE TABLE TodoList(
-    todoListId INT NOT NULL AUTO_INCREMENT,
+CREATE TABLE Project(
+    projectId INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     userId INT,
-    PRIMARY KEY(todoListId),
-    FOREIGN KEY(userId) REFERENCES Users(userId)
+    PRIMARY KEY(projectId),
+    FOREIGN KEY(userId) REFERENCES Users(userId) ON DELETE CASCADE
 );
 
 CREATE TABLE Task(
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255),
-    created_at DATE,
+    created_at VARCHAR(255),
     status VARCHAR(20) NOT NULL,
-    todoListId INT,
+    projectId INT,
     PRIMARY KEY(id),
-    FOREIGN KEY(todoListId) REFERENCES TodoList(todoListId)
+    FOREIGN KEY(projectId) REFERENCES Project(projectId) ON DELETE CASCADE
 );

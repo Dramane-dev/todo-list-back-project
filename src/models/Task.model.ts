@@ -1,32 +1,41 @@
 import { DataTypes } from "sequelize";
 import { db } from "../../db/config.db";
-import { Todo } from "./Todo.model";
+import { Project } from "./Project.model";
 
-const Task = db.define("todo", {
-    id: {
-        type: DataTypes.UUID,
-        primaryKey: true,
-        autoIncrement: true,
-        allowNull: false,
+const Task = db.define(
+    "task",
+    {
+        id: {
+            type: DataTypes.UUID,
+            primaryKey: true,
+            autoIncrement: true,
+            allowNull: false,
+        },
+        name: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        description: {
+            type: DataTypes.STRING,
+        },
+        created_at: {
+            type: DataTypes.STRING,
+        },
+        status: {
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        projectId: {
+            type: DataTypes.UUID,
+            references: {
+                model: Project,
+                key: "projectId",
+            },
+        },
     },
-    name: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-    description: {
-        type: DataTypes.STRING,
-    },
-    createdAt: {
-        type: DataTypes.DATE,
-    },
-    status: {
-        type: DataTypes.STRING,
-        allowNull: false,
-    },
-});
+    {
+        freezeTableName: true,
+    }
+);
 
-Task.belongsTo(Todo);
-
-export {
-    Task
-};
+export { Task };

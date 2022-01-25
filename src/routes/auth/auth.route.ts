@@ -2,12 +2,16 @@ import express, { Router } from "express";
 import { SignupController } from "../../controllers/auth/SignupController";
 import { SigninController } from "../../controllers/auth/SigninController";
 import { SignoutController } from "../../controllers/auth/SignoutController";
+import { getUserByIdController } from "../../controllers/auth/getUserByIdController";
+import { updateUserInfoController } from "../../controllers/auth/updateUserInfoController";
+import { getAllUsersController } from "../../controllers/auth/getAllUsersController";
 
-const router: Router = express.Router();
-router.post('/signup', SignupController);
-router.post('/signin', SigninController);
-router.delete('/signout', SignoutController);
+const authRoutes: Router = express.Router();
+authRoutes.post("/api/signup", SignupController);
+authRoutes.post("/api/signin", SigninController);
+authRoutes.get("/api/user/:id", getUserByIdController);
+authRoutes.get("/api/users", getAllUsersController);
+authRoutes.put("/api/user/:id", updateUserInfoController);
+authRoutes.delete("/api/signout", SignoutController);
 
-export {
-    router
-};
+export { authRoutes };

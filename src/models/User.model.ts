@@ -1,12 +1,13 @@
-import { DataTypes } from 'sequelize';
-import { db } from '../../db/config.db';
+import { DataTypes } from "sequelize";
+import { db } from "../../db/config.db";
+import { Project } from "./Project.model";
 
-export const User = db.define('user', {
+export const User = db.define("user", {
     userId: {
         type: DataTypes.UUID,
         primaryKey: true,
         autoIncrement: true,
-        allowNull: false
+        allowNull: false,
     },
     name: {
         type: DataTypes.STRING,
@@ -14,10 +15,13 @@ export const User = db.define('user', {
     email: {
         type: DataTypes.STRING,
         unique: true,
-        allowNull: false
+        allowNull: false,
     },
     password: {
         type: DataTypes.STRING,
-        allowNull: false
-    }
+        allowNull: false,
+    },
 });
+
+User.hasMany(Project, { as: "projects", foreignKey: "userId", onDelete: "cascade", onUpdate: "cascade" });
+Project.belongsTo(User, { as: "user", foreignKey: "userId" });
