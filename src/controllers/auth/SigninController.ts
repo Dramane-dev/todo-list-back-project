@@ -1,7 +1,7 @@
 import { User } from "../../models/User.model";
 import { Request, Response } from "express";
 import { verifyPassword } from "../../functions/auth/verifyPassword";
-import { generateTokenAndRefreshToken } from "../../functions/auth/generateToken";
+import { generateTokenAndRefreshToken } from "../../functions/auth/generateTokenAndRefreshToken";
 import config from "../../../config/defaults";
 
 export const SigninController = (req: Request, res: Response) => {

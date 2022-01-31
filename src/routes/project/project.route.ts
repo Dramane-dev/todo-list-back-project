@@ -1,4 +1,5 @@
 import express, { Router } from "express";
+import { verifyToken } from "../../middlewares/verifyToken";
 import { createProjectController } from "../../controllers/project/createProjectController";
 import { deleteProjectController } from "../../controllers/project/deleteProjectController";
 import { getAllProjectsController } from "../../controllers/project/getAllProjectsController";
@@ -6,10 +7,10 @@ import { getProjectByIdController } from "../../controllers/project/getProjectBy
 import { updateProjectController } from "../../controllers/project/updateProjectController";
 
 const projectRoutes: Router = express.Router();
-projectRoutes.get("/api/projects/:id", getAllProjectsController);
-projectRoutes.get("/api/project/:id", getProjectByIdController);
-projectRoutes.post("/api/project/:id", createProjectController);
-projectRoutes.put("/api/project/:id", updateProjectController);
-projectRoutes.delete("/api/project/:id", deleteProjectController);
+projectRoutes.get("/api/projects/:id", [verifyToken], getAllProjectsController);
+projectRoutes.get("/api/project/:id", [verifyToken], getProjectByIdController);
+projectRoutes.post("/api/project/:id", [verifyToken], createProjectController);
+projectRoutes.put("/api/project/:id", [verifyToken], updateProjectController);
+projectRoutes.delete("/api/project/:id", [verifyToken], deleteProjectController);
 
 export { projectRoutes };
