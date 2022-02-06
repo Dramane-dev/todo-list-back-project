@@ -4,6 +4,7 @@ import { Project } from "../../models/Project.model";
 export const createProjectController = (req: Request, res: Response) => {
     Project.create({
         name: req.body.name,
+        description: req.body.description,
         userId: req.params.id,
     })
         .then(() => {
@@ -11,6 +12,7 @@ export const createProjectController = (req: Request, res: Response) => {
                 message: "Project created successfuly ✅!",
                 todo: {
                     name: req.body.name,
+                    description: req.body.description,
                     projectId: req.body.projectId,
                     userId: req.params.id,
                 },

@@ -13,7 +13,11 @@ const Project = db.define(
             primaryKey: true,
         },
         name: {
-            type: DataTypes.INTEGER,
+            type: DataTypes.STRING,
+            allowNull: false,
+        },
+        description: {
+            type: DataTypes.STRING,
             allowNull: false,
         },
         userId: {

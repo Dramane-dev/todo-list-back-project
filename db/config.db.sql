@@ -13,6 +13,7 @@ CREATE TABLE Users(
 CREATE TABLE Project(
     projectId INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
+    description VARCHAR(255),
     userId INT,
     PRIMARY KEY(projectId),
     FOREIGN KEY(userId) REFERENCES Users(userId) ON DELETE CASCADE
