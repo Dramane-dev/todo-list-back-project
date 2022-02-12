@@ -9,7 +9,6 @@ export const updateTaskController = (req: Request, res: Response) => {
         name: req.body.name,
         description: req.body.description,
         created_at: req.body.created_at,
-        status: req.body.status,
         projectId: projectId,
     }, {
         where: {

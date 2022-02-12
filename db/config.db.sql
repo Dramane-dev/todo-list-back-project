@@ -24,7 +24,6 @@ CREATE TABLE Task(
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255),
     created_at VARCHAR(255),
-    status VARCHAR(20) NOT NULL,
     projectId INT,
     PRIMARY KEY(id),
     FOREIGN KEY(projectId) REFERENCES Project(projectId) ON DELETE CASCADE

@@ -7,7 +7,6 @@ export const createTaskController = (req: Request, res: Response) => {
         name: req.body.name,
         description: req.body.description,
         created_at: moment().format("DD/MM/YYYY HH:mm"),
-        status: req.body.status,
         projectId: req.params.id,
     })
         .then(() => {
@@ -17,7 +16,6 @@ export const createTaskController = (req: Request, res: Response) => {
                     name: req.body.name,
                     description: req.body.description,
                     created_at: moment().format("DD/MM/YYYY HH:mm"),
-                    status: req.body.status,
                     projectId: req.params.id,
                 },
             });
