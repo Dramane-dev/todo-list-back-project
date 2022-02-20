@@ -8,7 +8,8 @@ export const SignupController = (req: Request, res: Response) => {
 
     if (isSamePassword) {
         User.create({
-            name: req.body.name.toLowerCase(),
+            lastname: req.body.lastname.toLowerCase(),
+            firstname: req.body.firstname.toLowerCase(),
             email: req.body.email.toLowerCase(),
             password: bcrypt.hashSync(req.body.password, 12),
         })
@@ -16,13 +17,21 @@ export const SignupController = (req: Request, res: Response) => {
                 return res.send({
                     message: "User registred successfuly ✅!",
                     user: {
-                        name: req.body.name,
+                        lastname: req.body.lastname,
+                        firstname: req.body.firstname,
                         email: req.body.email,
                         password: bcrypt.hashSync(req.body.password, 12),
                     },
                 });
             })
             .catch((error) => {
+                let errorResult: string = error.errors[0].message.toString();
+
+                if (errorResult.includes("email must be unique")) {
+                    return res.status(500).send({
+                        message: errorResult + " ⚠️",
+                    });
+                }
                 return res.status(500).send({
                     message: error.message + " ⚠️",
                 });

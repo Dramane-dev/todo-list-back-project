@@ -4,9 +4,11 @@ USE todolist;
 
 CREATE TABLE Users(
     userId INT NOT NULL AUTO_INCREMENT,
-    name VARCHAR(100) NOT NULL,
+    lastname VARCHAR(100) NOT NULL,
+    firstname VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
+    bio VARCHAR(255)
     PRIMARY KEY(userId)
 );
 

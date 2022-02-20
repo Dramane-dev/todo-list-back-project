@@ -9,7 +9,11 @@ export const User = db.define("user", {
         autoIncrement: true,
         allowNull: false,
     },
-    name: {
+    lastname: {
+        type: DataTypes.STRING,
+        allowNull: false
+    },
+    firstname: {
         type: DataTypes.STRING,
     },
     email: {
@@ -21,6 +25,9 @@ export const User = db.define("user", {
         type: DataTypes.STRING,
         allowNull: false,
     },
+    bio: {
+        type: DataTypes.STRING
+    }
 });
 
 User.hasMany(Project, { as: "projects", foreignKey: "userId", onDelete: "cascade", onUpdate: "cascade" });
