@@ -2,6 +2,9 @@ import { User } from "../../models/User.model";
 import { Request, Response } from "express";
 import bcrypt from "bcrypt";
 import { passwordConfirmed } from "../../functions/auth/passwordConfirmed";
+import { IUser } from "../../interfaces/user.interface";
+import { sendMailVerificationCode } from "../../functions/auth/sendMailVerificationCode";
+import { generateMailVerificationCode } from "../../functions/auth/generateMailVerificationCode";
 
 export const SignupController = (req: Request, res: Response) => {
     let isSamePassword: boolean = passwordConfirmed(req.body.password, req.body.confirmedPassword);
@@ -12,17 +15,36 @@ export const SignupController = (req: Request, res: Response) => {
             firstname: req.body.firstname.toLowerCase(),
             email: req.body.email.toLowerCase(),
             password: bcrypt.hashSync(req.body.password, 12),
+            mailVerificationCode: generateMailVerificationCode()
         })
-            .then(() => {
-                return res.send({
-                    message: "User registred successfuly ✅!",
-                    user: {
-                        lastname: req.body.lastname,
-                        firstname: req.body.firstname,
-                        email: req.body.email,
-                        password: bcrypt.hashSync(req.body.password, 12),
-                    },
-                });
+            .then((result) => {
+                let user: IUser = {
+                    userId: result.getDataValue("userId"),
+                    lastname: result.getDataValue("lastname"),
+                    firstname: result.getDataValue("firstname"),
+                    email: result.getDataValue("email"),
+                    password: result.getDataValue("password"),
+                    bio: result.getDataValue("bio"),
+                    mailVerificationCode: result.getDataValue("mailVerificationCode"),
+                    mailConfirmed: result.getDataValue("mailConfirmed")
+                };
+
+                sendMailVerificationCode(user)
+                 .then((result) => {
+                    return result
+                 })
+                 .then((result) => {
+                    return res.send({
+                        message: "User registred successfuly ✅!",
+                        mailToVerification: result ? "Mail to verification sent successfully ✅" : result,
+                        user: user,
+                    });
+                 })
+                 .catch((error) => {
+                    res.status(500).send({
+                        message: error.message
+                    });
+                 });
             })
             .catch((error) => {
                 let errorResult: string = error.errors[0].message.toString();

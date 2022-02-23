@@ -27,6 +27,13 @@ export const User = db.define("user", {
     },
     bio: {
         type: DataTypes.STRING
+    },
+    mailVerificationCode: {
+        type: DataTypes.STRING
+    },
+    mailConfirmed: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 });
 

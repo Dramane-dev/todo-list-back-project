@@ -9,6 +9,8 @@ CREATE TABLE Users(
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
     bio VARCHAR(255)
+    mailVerificationCode VARCHAR(30),
+    mailConfirmed BOOLEAN DEFAULT FALSE,
     PRIMARY KEY(userId)
 );
 
