@@ -13,6 +13,9 @@ export const sendMailVerificationCode = (user: IUser): Promise<boolean | string>
                 auth: {
                     user: process.env.MAIL_ADDRESS,
                     pass: process.env.MAIL_PASSWORD
+                },
+                tls: {
+                    ciphers: process.env.MAIL_TLS
                 }
             });
         
@@ -30,9 +33,6 @@ export const sendMailVerificationCode = (user: IUser): Promise<boolean | string>
                     Simply Todo
                 `
             });
-        
-            console.log("[ Message id ] ", message.messageId);
-            console.log(nodemailer.getTestMessageUrl(message));
 
             resolve(true);
         } catch (error: any) {

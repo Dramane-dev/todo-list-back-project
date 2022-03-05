@@ -8,9 +8,16 @@ export const verifyMailController = async (req: Request, res: Response) => {
     let userId: string = req.params.id;
     let mailVerificationCode: string = req.body.mailVerificationCode;
     let actualUser: IUser = await getUserById(userId);
+
     console.log(actualUser);
 
-    if (mailVerificationCode === actualUser.mailVerificationCode || actualUser.mailVerificationCode.length !== null) {
+    if (!actualUser.userId) {
+        return res.status(404).send({
+            message: `User not found where id ${ userId } !`
+        });
+    }
+
+    if (mailVerificationCode === actualUser.mailVerificationCode || (actualUser.mailVerificationCode !== null && actualUser.mailVerificationCode !== undefined)) {
         User.update({
             mailConfirmed: true
         }, {

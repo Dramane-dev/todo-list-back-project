@@ -23,21 +23,22 @@ export const SignupController = (req: Request, res: Response) => {
                     lastname: result.getDataValue("lastname"),
                     firstname: result.getDataValue("firstname"),
                     email: result.getDataValue("email"),
-                    password: result.getDataValue("password"),
+                    password: "",
                     bio: result.getDataValue("bio"),
                     mailVerificationCode: result.getDataValue("mailVerificationCode"),
                     mailConfirmed: result.getDataValue("mailConfirmed")
                 };
-
+                
                 sendMailVerificationCode(user)
                  .then((result) => {
                     return result
                  })
                  .then((result) => {
+                     user.mailVerificationCode = "";
                     return res.send({
-                        message: "User registred successfuly ✅!",
-                        mailToVerification: result ? "Mail to verification sent successfully ✅" : result,
-                        user: user,
+                         message: "User registred successfuly ✅!",
+                         mailToVerification: result ? "Mail to verification sent successfully ✅" : result,
+                         user: user,
                     });
                  })
                  .catch((error) => {
@@ -48,9 +49,8 @@ export const SignupController = (req: Request, res: Response) => {
             })
             .catch((error) => {
                 let errorResult: string = error.errors[0].message.toString();
-
                 if (errorResult.includes("email must be unique")) {
-                    return res.status(500).send({
+                    return res.status(400).send({
                         message: errorResult + " ⚠️",
                     });
                 }

@@ -1,7 +1,7 @@
 import { User } from "../../models/User.model";
 import { Request, Response } from "express";
 import { verifyPassword } from "../../functions/auth/verifyPassword";
-import { generateTokenAndRefreshToken } from "../../functions/auth/generateTokenAndRefreshToken";
+import { generateToken } from "../../functions/auth/generateToken";
 import config from "../../../config/defaults";
 
 export const SigninController = (req: Request, res: Response) => {
@@ -20,11 +20,11 @@ export const SigninController = (req: Request, res: Response) => {
                 });
             }
 
-            let token: string = generateTokenAndRefreshToken(
+            let token: string = generateToken(
                 user?.getDataValue("userId"),
                 String(process.env.ACCESS_TOKEN_SECRET)
             );
-            let refreshToken: string = generateTokenAndRefreshToken(
+            let refreshToken: string = generateToken(
                 user?.getDataValue("userId"),
                 String(process.env.REFRESH_TOKEN_SECRET)
             );
