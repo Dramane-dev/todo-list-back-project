@@ -9,8 +9,6 @@ export const verifyMailController = async (req: Request, res: Response) => {
     let mailVerificationCode: string = req.body.mailVerificationCode;
     let actualUser: IUser = await getUserById(userId);
 
-    console.log(actualUser);
-
     if (!actualUser.userId) {
         return res.status(404).send({
             message: `User not found where id ${ userId } !`
