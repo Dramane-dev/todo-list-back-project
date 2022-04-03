@@ -14,7 +14,8 @@ export const getUserById = (userId: string): Promise<IUser> => {
                      password: user?.getDataValue("password"),
                      bio: user?.getDataValue("bio"),
                      mailVerificationCode: user?.getDataValue("mailVerificationCode"),
-                     mailConfirmed: user?.getDataValue("mailConfirmed")
+                     mailConfirmed: user?.getDataValue("mailConfirmed"),
+                     isAuthenticated: user?.getDataValue("isAuthenticated")
                  };
 
                  resolve(actualUser);

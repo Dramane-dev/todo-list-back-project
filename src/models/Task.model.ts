@@ -21,6 +21,9 @@ const Task = db.define(
         created_at: {
             type: DataTypes.STRING,
         },
+        status: {
+            type: DataTypes.STRING,
+        },
         projectId: {
             type: DataTypes.UUID,
             references: {

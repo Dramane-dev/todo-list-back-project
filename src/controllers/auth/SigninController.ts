@@ -3,6 +3,7 @@ import { Request, Response } from "express";
 import { verifyPassword } from "../../functions/auth/verifyPassword";
 import { generateToken } from "../../functions/auth/generateToken";
 import config from "../../../config/defaults";
+import { userIsAuthenticated } from "../../functions/auth/userIsAuthenticated";
 
 export const SigninController = (req: Request, res: Response) => {
     User.findOne({
@@ -12,9 +13,9 @@ export const SigninController = (req: Request, res: Response) => {
     })
         .then((user) => {
             let password: string = req.body.password;
-            let validPassword: boolean = !verifyPassword(password, user?.getDataValue("password"));
+            let inValidPassword: boolean = !verifyPassword(password, user?.getDataValue("password"));
 
-            if (!user || validPassword) {
+            if (!user || inValidPassword) {
                 return res.status(404).send({
                     message: "Invalid informations ❌!",
                 });
@@ -31,15 +32,27 @@ export const SigninController = (req: Request, res: Response) => {
 
             config.refreshTokens.push(refreshToken);
 
-            return res.status(200).send({
-                message: "User connected successfuly ✅!",
-                user: {
-                    name: user?.getDataValue("name"),
-                    email: user?.getDataValue("email"),
-                    accessToken: token,
-                    refreshToken: refreshToken,
-                },
-            });
+            let userId: string = user.getDataValue("userId");
+            let isAuthenticated: boolean = true;
+            
+            userIsAuthenticated(isAuthenticated, userId)
+             .then((response) => {
+                return res.status(200).send({
+                    message: "User connected successfuly ✅!",
+                    user: {
+                        name: user?.getDataValue("name"),
+                        email: user?.getDataValue("email"),
+                        isAuthenticated: user.getDataValue("isAuthenticated"),
+                        accessToken: token,
+                        refreshToken: refreshToken,
+                    },
+                });
+             })
+             .catch((error) => {
+                return res.status(200).send({
+                    message: `User not connected ${ error }`
+                });
+             });
         })
         .catch((error) => {
             if (error.message.includes("data and hash arguments required")) {

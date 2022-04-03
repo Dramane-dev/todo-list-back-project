@@ -1,6 +1,6 @@
-import crypto from "crypto";
 import nodemailer, { SentMessageInfo } from "nodemailer";
 import Mail from "nodemailer/lib/mailer";
+import { IMailResponse } from "../../interfaces/mailResponse.interface";
 import { IUser } from "../../interfaces/user.interface";
 
 export const sendMailVerificationCode = (user: IUser): Promise<boolean | string> => {
@@ -19,7 +19,7 @@ export const sendMailVerificationCode = (user: IUser): Promise<boolean | string>
                 }
             });
         
-            let message = await transport.sendMail({
+            let message: IMailResponse = await transport.sendMail({
                 from: process.env.MAIL_ADDRESS,
                 to: user.email,
                 subject: process.env.MAIL_SUBJECT + " ✅",
@@ -34,7 +34,13 @@ export const sendMailVerificationCode = (user: IUser): Promise<boolean | string>
                 `
             });
 
-            resolve(true);
+            let status = message.response.split(' ')[1];
+            
+            if (status === "OK") {
+                resolve(true);
+            }
+
+            reject(false);
         } catch (error: any) {
             reject(error.message);
         }

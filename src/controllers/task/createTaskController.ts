@@ -7,7 +7,7 @@ export const createTaskController = (req: Request, res: Response) => {
         name: req.body.name,
         description: req.body.description,
         created_at: moment().format("DD/MM/YYYY HH:mm"),
-        projectId: req.params.id,
+        projectId: req.params.projectId,
     })
         .then(() => {
             return res.status(200).send({
@@ -15,8 +15,8 @@ export const createTaskController = (req: Request, res: Response) => {
                 task: {
                     name: req.body.name,
                     description: req.body.description,
-                    created_at: moment().format("DD/MM/YYYY HH:mm"),
-                    projectId: req.params.id,
+                    createdAt: moment().format("DD/MM/YYYY HH:mm"),
+                    projectId: req.params.projectId,
                 },
             });
         })

@@ -6,5 +6,6 @@ export interface IUser {
     password: string,
     bio: string,
     mailVerificationCode: string,
-    mailConfirmed: boolean
+    mailConfirmed: boolean,
+    isAuthenticated: boolean
 }

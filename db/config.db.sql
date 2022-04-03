@@ -11,6 +11,7 @@ CREATE TABLE Users(
     bio VARCHAR(255)
     mailVerificationCode VARCHAR(30),
     mailConfirmed BOOLEAN DEFAULT FALSE,
+    isAuthenticated BOOLEAN DEFAULT FALSE NOT NULL
     PRIMARY KEY(userId)
 );
 

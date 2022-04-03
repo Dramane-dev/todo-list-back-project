@@ -26,7 +26,8 @@ export const SignupController = (req: Request, res: Response) => {
                     password: "",
                     bio: result.getDataValue("bio"),
                     mailVerificationCode: result.getDataValue("mailVerificationCode"),
-                    mailConfirmed: result.getDataValue("mailConfirmed")
+                    mailConfirmed: result.getDataValue("mailConfirmed"),
+                    isAuthenticated: result.getDataValue("isAuthenticated")
                 };
                 
                 sendMailVerificationCode(user)

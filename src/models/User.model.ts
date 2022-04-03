@@ -34,6 +34,10 @@ export const User = db.define("user", {
     mailConfirmed: {
         type: DataTypes.BOOLEAN,
         defaultValue: false
+    },
+    isAuthenticated: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
     }
 });
 

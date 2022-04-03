@@ -16,6 +16,6 @@ authRoutes.get("/api/user/:id", getUserByIdController);
 authRoutes.get("/api/users", getAllUsersController);
 authRoutes.put("/api/user/:id", updateUserInfoController);
 authRoutes.delete("/api/signout", SignoutController);
-authRoutes.get("/api/is-authenticated", isAuthenticatedController);
+authRoutes.get("/api/is-authenticated/:id", isAuthenticatedController);
 
 export { authRoutes };

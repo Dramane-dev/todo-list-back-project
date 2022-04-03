@@ -9,8 +9,8 @@ import { verifyToken } from "../../middlewares/verifyToken";
 const taskRoute: Router = express.Router();
 taskRoute.get("/api/tasks/:id", [verifyToken], getAllTasksController);
 taskRoute.get("/api/task/:id", [verifyToken], getTaskByIdController);
-taskRoute.post("/api/task/:id", [verifyToken], createTaskController);
-taskRoute.put("/api/project/:projectId/task/:id", [verifyToken], updateTaskController);
+taskRoute.post("/api/task/:projectId", [verifyToken], createTaskController);
+taskRoute.put("/api/task/:id", [verifyToken], updateTaskController);
 taskRoute.delete("/api/task/:id", [verifyToken], deleteTaskController);
 
 export { taskRoute };

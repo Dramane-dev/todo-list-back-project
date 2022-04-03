@@ -14,8 +14,8 @@ export const verifyMailController = async (req: Request, res: Response) => {
             message: `User not found where id ${ userId } !`
         });
     }
-
-    if (mailVerificationCode === actualUser.mailVerificationCode || (actualUser.mailVerificationCode !== null && actualUser.mailVerificationCode !== undefined)) {
+    
+    if (mailVerificationCode === actualUser.mailVerificationCode && (actualUser.mailVerificationCode !== null && actualUser.mailVerificationCode !== undefined)) {
         User.update({
             mailConfirmed: true
         }, {
