@@ -1,4 +1,4 @@
-FROM node:16-slim
+FROM node:latest
 
 WORKDIR /todo-list-back-project
 
