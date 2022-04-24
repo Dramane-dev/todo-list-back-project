@@ -11,7 +11,7 @@ export const User = db.define("user", {
     },
     lastname: {
         type: DataTypes.STRING,
-        allowNull: false
+        allowNull: false,
     },
     firstname: {
         type: DataTypes.STRING,
@@ -26,19 +26,19 @@ export const User = db.define("user", {
         allowNull: false,
     },
     bio: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
     },
     mailVerificationCode: {
-        type: DataTypes.STRING
+        type: DataTypes.STRING,
     },
     mailConfirmed: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
     },
     isAuthenticated: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
-    }
+        defaultValue: false,
+    },
 });
 
 User.hasMany(Project, { as: "projects", foreignKey: "userId", onDelete: "cascade", onUpdate: "cascade" });

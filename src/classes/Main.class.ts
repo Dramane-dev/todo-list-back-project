@@ -15,10 +15,7 @@ export default class Main {
         this._router.use(compression());
         this._router.use(cors());
         this._router.use((req: Request, res: Response, next: NextFunction) => {
-            res.header(
-                "Access-Control-Allow-Headers",
-                "x-access-token, Origin, Content-Type, Accept"
-            );
+            res.header("Access-Control-Allow-Headers", "x-access-token, Origin, Content-Type, Accept");
             next();
         });
         this._router.use("/", authRoutes);

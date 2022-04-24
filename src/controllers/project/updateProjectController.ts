@@ -1,10 +1,10 @@
 import { Request, Response } from "express";
 import { Project } from "../../models/Project.model";
 interface Project {
-    projectId: number,
-    name: string,
-    description: string,
-    userId: number
+    projectId: number;
+    name: string;
+    description: string;
+    userId: number;
 }
 
 export const updateProjectController = async (req: Request, res: Response) => {
@@ -13,7 +13,7 @@ export const updateProjectController = async (req: Request, res: Response) => {
     Project.update(
         {
             name: req.body.projectName,
-            description: req.body.projectDescription
+            description: req.body.projectDescription,
         },
         {
             where: {
@@ -21,16 +21,14 @@ export const updateProjectController = async (req: Request, res: Response) => {
             },
         }
     )
-     .then(() => {
-         return res.status(200).send({
-             message: "Project updated successfully ✅!",
-         });
-     })
-     .catch((error) => {
-         return res.send({
-             message: error.message + " ❌",
-         });
-     });
-
-
+        .then(() => {
+            return res.status(200).send({
+                message: "Project updated successfully ✅!",
+            });
+        })
+        .catch((error) => {
+            return res.send({
+                message: error.message + " ❌",
+            });
+        });
 };

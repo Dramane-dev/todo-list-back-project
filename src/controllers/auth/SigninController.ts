@@ -21,10 +21,7 @@ export const SigninController = (req: Request, res: Response) => {
                 });
             }
 
-            let token: string = generateToken(
-                user?.getDataValue("userId"),
-                String(process.env.ACCESS_TOKEN_SECRET)
-            );
+            let token: string = generateToken(user?.getDataValue("userId"), String(process.env.ACCESS_TOKEN_SECRET));
             let refreshToken: string = generateToken(
                 user?.getDataValue("userId"),
                 String(process.env.REFRESH_TOKEN_SECRET)
@@ -34,25 +31,25 @@ export const SigninController = (req: Request, res: Response) => {
 
             let userId: string = user.getDataValue("userId");
             let isAuthenticated: boolean = true;
-            
+
             userIsAuthenticated(isAuthenticated, userId)
-             .then((response) => {
-                return res.status(200).send({
-                    message: "User connected successfuly ✅!",
-                    user: {
-                        name: user?.getDataValue("name"),
-                        email: user?.getDataValue("email"),
-                        isAuthenticated: user.getDataValue("isAuthenticated"),
-                        accessToken: token,
-                        refreshToken: refreshToken,
-                    },
+                .then((response) => {
+                    return res.status(200).send({
+                        message: "User connected successfuly ✅!",
+                        user: {
+                            name: user?.getDataValue("name"),
+                            email: user?.getDataValue("email"),
+                            isAuthenticated: user.getDataValue("isAuthenticated"),
+                            accessToken: token,
+                            refreshToken: refreshToken,
+                        },
+                    });
+                })
+                .catch((error) => {
+                    return res.status(200).send({
+                        message: `User not connected ${error}`,
+                    });
                 });
-             })
-             .catch((error) => {
-                return res.status(200).send({
-                    message: `User not connected ${ error }`
-                });
-             });
         })
         .catch((error) => {
             if (error.message.includes("data and hash arguments required")) {

@@ -11,39 +11,46 @@ export const verifyMailController = async (req: Request, res: Response) => {
 
     if (!actualUser.userId) {
         return res.status(404).send({
-            message: `User not found where id ${ userId } !`
+            message: `User not found where id ${userId} !`,
         });
     }
-    
-    if (mailVerificationCode === actualUser.mailVerificationCode && (actualUser.mailVerificationCode !== null && actualUser.mailVerificationCode !== undefined)) {
-        User.update({
-            mailConfirmed: true
-        }, {
-            where: {
-                userId: userId
+
+    if (
+        mailVerificationCode === actualUser.mailVerificationCode &&
+        actualUser.mailVerificationCode !== null &&
+        actualUser.mailVerificationCode !== undefined
+    ) {
+        User.update(
+            {
+                mailConfirmed: true,
+            },
+            {
+                where: {
+                    userId: userId,
+                },
             }
-        })
-         .then(async () => {
-            await deleteMailVerificationCodeFromDb(userId)
-            .then(() => {
-               return res.status(200).send({
-                   message: "Mail verified successfully ✅ !"
-               });
+        )
+            .then(async () => {
+                await deleteMailVerificationCodeFromDb(userId)
+                    .then(() => {
+                        return res.status(200).send({
+                            message: "Mail verified successfully ✅ !",
+                        });
+                    })
+                    .catch((error) => {
+                        return res.status(401).send({
+                            message: error,
+                        });
+                    });
             })
             .catch((error) => {
-                return res.status(401).send({
-                    message: error
+                return res.status(500).send({
+                    message: error.message,
                 });
             });
-         })
-         .catch((error) => {
-             return res.status(500).send({
-                 message: error.message
-             });
-         });
     } else {
         return res.status(401).send({
-            message: "Invalid mail code verification ❌. Please check your email !"
+            message: "Invalid mail code verification ❌. Please check your email !",
         });
     }
-}
+};

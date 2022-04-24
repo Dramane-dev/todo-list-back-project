@@ -5,16 +5,19 @@ export const updateTaskController = (req: Request, res: Response) => {
     let id: string = req.params.id;
     let projectId: string = req.params.projectId;
 
-    Task.update({
-        name: req.body.name,
-        description: req.body.description,
-        status: req.body.status,
-        projectId: projectId,
-    }, {
-        where: {
-            id: id
+    Task.update(
+        {
+            name: req.body.name,
+            description: req.body.description,
+            status: req.body.status,
+            projectId: projectId,
+        },
+        {
+            where: {
+                id: id,
+            },
         }
-    })
+    )
         .then((result) => {
             // if (result[0] === 0) {
             //     return res.status(500).send({
@@ -23,7 +26,7 @@ export const updateTaskController = (req: Request, res: Response) => {
             // }
 
             return res.status(200).send({
-                message: "Task updated successfully ✅!"
+                message: "Task updated successfully ✅!",
             });
         })
         .catch((error) => {

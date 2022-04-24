@@ -12,30 +12,30 @@ export const sendMailVerificationCode = (user: IUser): Promise<boolean | string>
                 secure: false,
                 auth: {
                     user: process.env.MAIL_ADDRESS,
-                    pass: process.env.MAIL_PASSWORD
+                    pass: process.env.MAIL_PASSWORD,
                 },
                 tls: {
-                    ciphers: process.env.MAIL_TLS
-                }
+                    ciphers: process.env.MAIL_TLS,
+                },
             });
-        
+
             let message: IMailResponse = await transport.sendMail({
                 from: process.env.MAIL_ADDRESS,
                 to: user.email,
                 subject: process.env.MAIL_SUBJECT + " ✅",
                 text: `
-                    Bonjour ${ user.firstname } 👋, \n 
+                    Bonjour ${user.firstname} 👋, \n 
                     
-                    Voici le code te permettant de vérifier ton email : ${ user.mailVerificationCode }\n
+                    Voici le code te permettant de vérifier ton email : ${user.mailVerificationCode}\n
         
                     Il te suffit simplement de le copier/coller dans le champ prévue à cet effet !\n
         
                     Simply Todo
-                `
+                `,
             });
 
-            let status = message.response.split(' ')[1];
-            
+            let status = message.response.split(" ")[1];
+
             if (status === "OK") {
                 resolve(true);
             }
@@ -44,5 +44,5 @@ export const sendMailVerificationCode = (user: IUser): Promise<boolean | string>
         } catch (error: any) {
             reject(error.message);
         }
-    })
+    });
 };

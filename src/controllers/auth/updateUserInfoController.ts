@@ -12,7 +12,7 @@ export const updateUserInfoController = async (req: Request, res: Response) => {
             firstname: req.body.firstname,
             email: req.body.email,
             password: req.body.password ? updatePassword(req.body.password) : userPassword,
-            bio: req.body.bio
+            bio: req.body.bio,
         },
         {
             where: {

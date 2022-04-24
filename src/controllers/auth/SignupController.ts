@@ -15,7 +15,7 @@ export const SignupController = (req: Request, res: Response) => {
             firstname: req.body.firstname.toLowerCase(),
             email: req.body.email.toLowerCase(),
             password: bcrypt.hashSync(req.body.password, 12),
-            mailVerificationCode: generateMailVerificationCode()
+            mailVerificationCode: generateMailVerificationCode(),
         })
             .then((result) => {
                 let user: IUser = {
@@ -27,26 +27,26 @@ export const SignupController = (req: Request, res: Response) => {
                     bio: result.getDataValue("bio"),
                     mailVerificationCode: result.getDataValue("mailVerificationCode"),
                     mailConfirmed: result.getDataValue("mailConfirmed"),
-                    isAuthenticated: result.getDataValue("isAuthenticated")
+                    isAuthenticated: result.getDataValue("isAuthenticated"),
                 };
-                
+
                 sendMailVerificationCode(user)
-                 .then((result) => {
-                    return result
-                 })
-                 .then((result) => {
-                     user.mailVerificationCode = "";
-                    return res.send({
-                         message: "User registred successfuly ✅!",
-                         mailToVerification: result ? "Mail to verification sent successfully ✅" : result,
-                         user: user,
+                    .then((result) => {
+                        return result;
+                    })
+                    .then((result) => {
+                        user.mailVerificationCode = "";
+                        return res.send({
+                            message: "User registred successfuly ✅!",
+                            mailToVerification: result ? "Mail to verification sent successfully ✅" : result,
+                            user: user,
+                        });
+                    })
+                    .catch((error) => {
+                        res.status(500).send({
+                            message: error.message,
+                        });
                     });
-                 })
-                 .catch((error) => {
-                    res.status(500).send({
-                        message: error.message
-                    });
-                 });
             })
             .catch((error) => {
                 let errorResult: string = error.errors[0].message.toString();
