@@ -1,6 +1,6 @@
 FROM node:16.14-alpine
 
-WORKDIR /todo-list-back
+WORKDIR /todo-list-back-project
 
 EXPOSE 3000
 
