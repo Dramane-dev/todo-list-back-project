@@ -6,6 +6,7 @@ export const createTaskController = (req: Request, res: Response) => {
     Task.create({
         name: req.body.name,
         description: req.body.description,
+        status: req.body.status ? req.body.status : "todo",
         created_at: moment().format("DD/MM/YYYY HH:mm"),
         projectId: req.params.projectId,
     })

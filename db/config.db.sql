@@ -28,6 +28,7 @@ CREATE TABLE Task(
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255),
+    status VARCHAR(20) DEFAULT "todo",
     created_at VARCHAR(255),
     projectId INT,
     PRIMARY KEY(id),
