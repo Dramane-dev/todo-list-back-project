@@ -4,9 +4,9 @@ WORKDIR /todo-list-back-project
 
 EXPOSE 3000
 
-ENV PATH /server/node_modules/.bin:$PATH
+ENV PATH /todo-list-back-project/node_modules/.bin:$PATH
 
-COPY package*.json /server/
+COPY package*.json /todo-list-back-project/
 RUN npm install
 RUN npm run build
 
