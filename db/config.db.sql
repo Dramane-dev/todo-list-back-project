@@ -1,30 +1,31 @@
-CREATE DATABASE todolist;
+DROP DATABASE IF EXISTS todolist;
+CREATE DATABASE IF NOT EXISTS todolist;
 
 USE todolist;
 
-CREATE TABLE Users(
+CREATE TABLE users(
     userId INT NOT NULL AUTO_INCREMENT,
     lastname VARCHAR(100) NOT NULL,
     firstname VARCHAR(100) NOT NULL,
     email VARCHAR(255) NOT NULL UNIQUE,
     password VARCHAR(255) NOT NULL,
-    bio VARCHAR(255)
+    bio VARCHAR(255),
     mailVerificationCode VARCHAR(30),
     mailConfirmed BOOLEAN DEFAULT FALSE,
-    isAuthenticated BOOLEAN DEFAULT FALSE NOT NULL
+    isAuthenticated BOOLEAN DEFAULT FALSE NOT NULL,
     PRIMARY KEY(userId)
 );
 
-CREATE TABLE Project(
+CREATE TABLE project(
     projectId INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255),
     userId INT,
     PRIMARY KEY(projectId),
-    FOREIGN KEY(userId) REFERENCES Users(userId) ON DELETE CASCADE
+    FOREIGN KEY(userId) REFERENCES users(userId) ON DELETE CASCADE
 );
 
-CREATE TABLE Task(
+CREATE TABLE task(
     id INT NOT NULL AUTO_INCREMENT,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255),
@@ -32,5 +33,5 @@ CREATE TABLE Task(
     created_at VARCHAR(255),
     projectId INT,
     PRIMARY KEY(id),
-    FOREIGN KEY(projectId) REFERENCES Project(projectId) ON DELETE CASCADE
+    FOREIGN KEY(projectId) REFERENCES project(projectId) ON DELETE CASCADE
 );

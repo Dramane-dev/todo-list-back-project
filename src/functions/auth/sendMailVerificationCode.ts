@@ -34,7 +34,7 @@ export const sendMailVerificationCode = (user: IUser): Promise<boolean | string>
                 `,
             });
 
-            let status = message.response.split(" ")[1];
+            let status = message.response.split(" ")[2];
 
             if (status === "OK") {
                 resolve(true);

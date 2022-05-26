@@ -6,6 +6,7 @@ import { authRoutes } from "../routes/auth/auth.route";
 import { projectRoutes } from "../routes/project/project.route";
 import cors from "cors";
 import { taskRoute } from "../routes/task/task.route";
+import { healthcheckRoutes } from "../routes/healthcheck/healthcheck";
 export default class Main {
     constructor(private _router: Express, private _port: number) {}
 
@@ -18,6 +19,7 @@ export default class Main {
             res.header("Access-Control-Allow-Headers", "x-access-token, Origin, Content-Type, Accept");
             next();
         });
+        this._router.use("/", healthcheckRoutes);
         this._router.use("/", authRoutes);
         this._router.use("/", projectRoutes);
         this._router.use("/", taskRoute);
